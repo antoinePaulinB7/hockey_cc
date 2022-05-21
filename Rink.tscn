@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/rink.png" type="Texture" id=1]
+
+[sub_resource type="PhysicsMaterial" id=1]
+friction = 0.25
+rough = true
+bounce = 0.5
+
+[node name="Rink" type="StaticBody2D"]
+collision_layer = 8
+collision_mask = 14
+physics_material_override = SubResource( 1 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -168, -88, 168, -88, 168, -104, -168, -104 )
+
+[node name="CollisionPolygon2D4" type="CollisionPolygon2D" parent="."]
+position = Vector2( -120, -120 )
+rotation = -1.57079
+polygon = PoolVector2Array( -168, -104, -168, -88, -184, -80, -200, -64, -208, -48, -224, -48, -224, -104 )
+
+[node name="CollisionPolygon2D3" type="CollisionPolygon2D" parent="."]
+rotation = 3.14159
+polygon = PoolVector2Array( -168, -104, -168, -88, -184, -80, -200, -64, -208, -48, -224, -48, -224, -104 )
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -168, -104, -168, -88, -184, -80, -200, -64, -208, -48, -224, -48, -224, -104 )
+
+[node name="CollisionPolygon2D5" type="CollisionPolygon2D" parent="."]
+position = Vector2( 120, 120 )
+rotation = 1.57079
+polygon = PoolVector2Array( -168, -104, -168, -88, -184, -80, -200, -64, -208, -48, -224, -48, -224, -104 )
+
+[node name="CollisionPolygon2D7" type="CollisionPolygon2D" parent="."]
+position = Vector2( 432, 0 )
+polygon = PoolVector2Array( -224, -48, -224, 48, -208, 48, -208, -48 )
+
+[node name="CollisionPolygon2D6" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( -224, -48, -224, 48, -208, 48, -208, -48 )
+
+[node name="CollisionPolygon2D8" type="CollisionPolygon2D" parent="."]
+position = Vector2( 0, 192 )
+polygon = PoolVector2Array( -168, -88, 168, -88, 168, -104, -168, -104 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )

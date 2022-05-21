@@ -1,0 +1,74 @@
+{ "frames": {
+   "character_base 0.aseprite": {
+    "frame": { "x": 0, "y": 0, "w": 36, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 36, "h": 36 },
+    "sourceSize": { "w": 36, "h": 36 },
+    "duration": 100
+   },
+   "character_base 1.aseprite": {
+    "frame": { "x": 36, "y": 0, "w": 36, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 36, "h": 36 },
+    "sourceSize": { "w": 36, "h": 36 },
+    "duration": 100
+   },
+   "character_base 2.aseprite": {
+    "frame": { "x": 72, "y": 0, "w": 36, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 36, "h": 36 },
+    "sourceSize": { "w": 36, "h": 36 },
+    "duration": 100
+   },
+   "character_base 3.aseprite": {
+    "frame": { "x": 108, "y": 0, "w": 36, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 36, "h": 36 },
+    "sourceSize": { "w": 36, "h": 36 },
+    "duration": 100
+   },
+   "character_base 4.aseprite": {
+    "frame": { "x": 144, "y": 0, "w": 36, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 36, "h": 36 },
+    "sourceSize": { "w": 36, "h": 36 },
+    "duration": 100
+   },
+   "character_base 5.aseprite": {
+    "frame": { "x": 180, "y": 0, "w": 36, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 36, "h": 36 },
+    "sourceSize": { "w": 36, "h": 36 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.34.1-x64",
+  "image": "character_base.png",
+  "format": "I8",
+  "size": { "w": 216, "h": 36 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "Idle", "from": 0, "to": 0, "direction": "forward" },
+   { "name": "Idle - Back", "from": 1, "to": 1, "direction": "forward" },
+   { "name": "Skating", "from": 2, "to": 2, "direction": "forward" },
+   { "name": "Skating - Back", "from": 3, "to": 3, "direction": "forward" },
+   { "name": "Charging Shot", "from": 4, "to": 4, "direction": "forward" },
+   { "name": "Charging Shot - Back", "from": 5, "to": 5, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Body", "opacity": 255, "blendMode": "normal" },
+   { "name": "Arms & Stick", "opacity": 255, "blendMode": "normal" },
+   { "name": "Head", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

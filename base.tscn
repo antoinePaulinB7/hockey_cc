@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Puck.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Rink.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Net.tscn" type="PackedScene" id=4]
+[ext_resource path="res://RightNet.tscn" type="PackedScene" id=5]
 
 [node name="Node2D" type="Node2D"]
 
@@ -21,9 +23,16 @@ script = null
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( -96, -43 )
 lefty = false
+precision = 35
 
 [node name="Puck" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 0, 0 )
+
+[node name="Net" parent="YSort" instance=ExtResource( 4 )]
+position = Vector2( -186, 22 )
+
+[node name="Net" parent="." instance=ExtResource( 5 )]
+position = Vector2( 187, 22 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true

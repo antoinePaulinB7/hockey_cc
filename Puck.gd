@@ -46,6 +46,7 @@ func release():
 #	position = holder.puck_collider.position
 
 	set_collision_mask_bit(Constants.COLLISION_LAYERS["Player"], true)
+	linear_velocity = Vector2.ZERO
 	apply_central_impulse(holder.get_direction() * 500)
 #	set_sleeping(false)
 	holder = null

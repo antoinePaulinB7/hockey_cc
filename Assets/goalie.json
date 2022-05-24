@@ -1,0 +1,31 @@
+{ "frames": {
+   "goalie.aseprite": {
+    "frame": { "x": 0, "y": 0, "w": 36, "h": 36 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 36, "h": 36 },
+    "sourceSize": { "w": 36, "h": 36 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "http://www.aseprite.org/",
+  "version": "1.2.34.1-x64",
+  "image": "goalie.png",
+  "format": "I8",
+  "size": { "w": 36, "h": 36 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "Idle", "from": 0, "to": 0, "direction": "forward" }
+  ],
+  "layers": [
+   { "name": "Right Arm & Glove", "opacity": 255, "blendMode": "normal" },
+   { "name": "Body", "opacity": 255, "blendMode": "normal" },
+   { "name": "Pads", "opacity": 255, "blendMode": "normal" },
+   { "name": "Left Arm & Stick", "opacity": 255, "blendMode": "normal" },
+   { "name": "Head", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

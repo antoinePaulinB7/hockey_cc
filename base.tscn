@@ -24,7 +24,9 @@ script = null
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( -96, -43 )
 lefty = false
-precision = 35
+shot_power = 50
+max_speed = 120.0
+accel = 2.5
 
 [node name="Puck" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 0, 0 )

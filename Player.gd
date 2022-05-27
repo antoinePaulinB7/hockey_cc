@@ -3,15 +3,21 @@ class_name Player
 
 export(bool) var lefty = true
 export(float, 10.0, 50.0) var charge_shot_rate = 10.0
-export(Curve) var precision_curve
 export(int, 1, 99) var precision = 1
+export(int, 1, 99) var shot_power = 1
+export(int, 1, 99) var skating_speed = 1
+export(float, 100, 250) var max_speed = 100
+export(float, 1.0, 5.0) var accel = 2.0
 
 onready var sprite: Sprite = $Sprite
 onready var animation_player: AnimationPlayer = $AnimationPlayer
 onready var flipper: AnimationPlayer = $Flipper
 onready var puck_area: Area2D = $PuckArea
 onready var puck_collider: CollisionShape2D = $PuckArea/PuckCollider
-onready var line_2d: Line2D = $Line2D
+onready var line_up: Line2D = $LineUp
+onready var line_down: Line2D = $LineDown
+onready var line_shot: Line2D = $LineShot
+onready var skating_particles: Particles2D = $SkatingParticles
 
 enum PlayerState {
 	IDLE, SKATING, CHARGING, SHOOTING, FALLEN, KO
@@ -33,6 +39,7 @@ var direction: Vector2 = Vector2.ZERO
 var looking_left: bool = false
 var puck: RigidBody2D = null
 var charging: float = 0.0
+var max_charge: float = 10.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -76,7 +83,16 @@ func _process(delta):
 	elif direction.x > 0.01:
 		flip = Flip.RIGHT
 		facing = Facing.RIGHT
-		
+	
+	if direction.length() > 0.01 and linear_velocity.length() > 50.0:
+		if abs(direction.angle_to(linear_velocity)) > 2.5:
+			skating_particles.emitting = true
+			skating_particles.set_rotation((direction).angle())
+		else:
+			skating_particles.emitting = false
+	
+	print(linear_velocity.length())
+	
 	update_line()
 
 func _physics_process(delta):
@@ -120,14 +136,19 @@ func _physics_process(delta):
 				flipper.play("Shooting Left")
 
 func update_line():
-#	line_2d.clear_points()
-#	line_2d.add_point(puck_collider.position + sprite.position)
-#	line_2d.add_point(puck_collider.position + sprite.position + get_direction() * 10 * charging)
-##	line_2d.width_curve.max_value = charging
-#	line_2d.width_curve.set_point_value(1, charging / precision_curve.interpolate(float(precision) / 99))
-	line_2d.clear_points()
-	line_2d.add_point(puck_collider.position + sprite.position)
-	line_2d.add_point(puck_collider.position + sprite.position + get_direction() * 10 * charging)
+	var precision_factor = (100.0 - precision)/99.0
+	
+	line_up.clear_points()
+	line_up.add_point(puck_collider.position + sprite.position)
+	line_up.add_point(puck_collider.position + sprite.position + get_direction().rotated((-PI/4) * precision_factor) * 10 * charging)
+	
+	line_down.clear_points()
+	line_down.add_point(puck_collider.position + sprite.position)
+	line_down.add_point(puck_collider.position + sprite.position + get_direction().rotated((PI/4) * precision_factor) * 10 * charging)
+	
+	line_shot.clear_points()
+	line_shot.add_point(puck_collider.position + sprite.position)
+	line_shot.add_point(puck_collider.position + sprite.position + Vector2.UP * 16 * get_shot_strength())
 
 #	add_force(Vector2(0, 0), direction * 10)
 func get_direction():
@@ -139,6 +160,19 @@ func get_direction():
 			return Vector2.RIGHT
 		Facing.LEFT:
 			return Vector2.LEFT
+
+func get_shot_strength():
+	var charge = min(charging, max_charge) / max_charge
+	var power = shot_power / 99.0
+	
+	return charge * power
+
+func get_shot_direction():
+	var curr_direction = get_direction()
+	var precision_factor = (100.0 - precision)/99.0
+	var deviation = rand_range((-PI/4) * precision_factor, (PI/4) * precision_factor)
+	
+	return curr_direction.rotated(deviation)
 
 func release_puck():
 	if puck:
@@ -153,9 +187,12 @@ func _integrate_forces(state):
 	match player_state:
 		PlayerState.IDLE, PlayerState.SKATING:
 			if (direction.length() > 0.01):
-				apply_central_impulse(direction * 1.75)
+				apply_central_impulse(direction * accel)
+#				apply_central_impulse(direction * 1.75)
 		PlayerState.SHOOTING:
 			apply_central_impulse(-get_direction() * 50)
 			player_state = PlayerState.IDLE
 		_:
 			pass
+	
+	state.linear_velocity = state.linear_velocity.clamped(max_speed)

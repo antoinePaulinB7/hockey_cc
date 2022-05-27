@@ -1,19 +1,15 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://Assets/character_base.png" type="Texture" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
 [ext_resource path="res://Flip.tres" type="Animation" id=3]
+[ext_resource path="res://Assets/ice_particle.png" type="Texture" id=4]
 
 [sub_resource type="PhysicsMaterial" id=27]
 friction = 0.0
 rough = true
 bounce = 1.0
 absorbent = true
-
-[sub_resource type="Curve" id=26]
-min_value = 0.1
-max_value = 20.0
-_data = [ Vector2( 0, 0.1 ), 0.0, 1.12076, 0, 0, Vector2( 1, 13.6682 ), 45.9509, 0.0, 0, 0 ]
 
 [sub_resource type="CapsuleShape2D" id=8]
 radius = 5.99998
@@ -226,8 +222,37 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[sub_resource type="Gradient" id=25]
-colors = PoolColorArray( 0.403922, 1, 0.4, 1, 0.403922, 1, 0.4, 0 )
+[sub_resource type="OpenSimplexNoise" id=28]
+seed = 3
+octaves = 6
+lacunarity = 2.66
+
+[sub_resource type="NoiseTexture" id=29]
+seamless = true
+noise = SubResource( 28 )
+
+[sub_resource type="Curve" id=31]
+_data = [ Vector2( 0, 0.384091 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), -6.49383, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=32]
+curve = SubResource( 31 )
+
+[sub_resource type="ParticlesMaterial" id=30]
+emission_shape = 1
+emission_sphere_radius = 0.5
+flag_disable_z = true
+direction = Vector3( -1, 0, 0 )
+spread = 15.0
+flatness = 1.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 100.0
+initial_velocity_random = 0.35
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 360.0
+angle_random = 1.0
+scale_random = 1.0
+scale_curve = SubResource( 32 )
 
 [sub_resource type="Animation" id=21]
 resource_name = "Idling Left"
@@ -383,7 +408,6 @@ contacts_reported = 2
 contact_monitor = true
 linear_damp = 0.85
 script = ExtResource( 2 )
-precision_curve = SubResource( 26 )
 
 [node name="PuckArea" type="Area2D" parent="." groups=["puck_area"]]
 position = Vector2( 2.28882e-05, -7 )
@@ -418,20 +442,36 @@ anims/RESET = SubResource( 6 )
 anims/Skating = SubResource( 11 )
 "anims/Skating - Back" = SubResource( 15 )
 
+[node name="LineUp" type="Line2D" parent="."]
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
+texture = SubResource( 29 )
+texture_mode = 1
+
+[node name="LineDown" type="Line2D" parent="."]
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
+texture = SubResource( 29 )
+texture_mode = 1
+
+[node name="LineShot" type="Line2D" parent="."]
+default_color = Color( 0.85098, 0.341176, 0.388235, 1 )
+
+[node name="SkatingParticles" type="Particles2D" parent="."]
+emitting = false
+amount = 16
+lifetime = 0.5
+one_shot = true
+explosiveness = 1.0
+local_coords = false
+process_material = SubResource( 30 )
+texture = ExtResource( 4 )
+
 [node name="Sprite" type="Sprite" parent="."]
 position = Vector2( 2.28882e-05, -7 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 144, 0, 36, 36 )
-
-[node name="Line2D" type="Line2D" parent="."]
-width = 2.0
-default_color = Color( 0.403922, 1, 0.4, 1 )
-gradient = SubResource( 25 )
-texture_mode = 1
-joint_mode = 2
-begin_cap_mode = 2
-end_cap_mode = 2
 
 [node name="Flipper" type="AnimationPlayer" parent="."]
 playback_process_mode = 0

@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Assets/puck.png" type="Texture" id=1]
 [ext_resource path="res://Puck.gd" type="Script" id=2]
+[ext_resource path="res://Assets/explosion_particles.png" type="Texture" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 3.0
@@ -61,16 +62,56 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
+[sub_resource type="Gradient" id=35]
+offsets = PoolRealArray( 0, 0.152709, 0.344828, 0.55665, 0.886699 )
+colors = PoolColorArray( 1, 1, 1, 1, 0.984314, 0.94902, 0.211765, 1, 0.87451, 0.443137, 0.14902, 1, 0.67451, 0.196078, 0.196078, 1, 0.133333, 0.12549, 0.203922, 1 )
+
+[sub_resource type="GradientTexture" id=34]
+gradient = SubResource( 35 )
+width = 16
+
+[sub_resource type="Curve" id=36]
+_data = [ Vector2( 0, 1 ), 0.0, -2.12213, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=32]
+curve = SubResource( 36 )
+
+[sub_resource type="Curve" id=38]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=39]
+width = 64
+curve = SubResource( 38 )
+
+[sub_resource type="ParticlesMaterial" id=37]
+lifetime_randomness = 1.0
+trail_size_modifier = SubResource( 39 )
+emission_shape = 1
+emission_sphere_radius = 4.0
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, -1, 0 )
+angular_velocity = 360.0
+angular_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle = 360.0
+angle_random = 1.0
+scale = 2.0
+scale_curve = SubResource( 32 )
+color_ramp = SubResource( 34 )
+
 [node name="Puck" type="RigidBody2D" groups=["puck"]]
 position = Vector2( 55, 14 )
 collision_layer = 4
-collision_mask = 126
+collision_mask = 382
 mode = 2
 gravity_scale = 0.0
 continuous_cd = 2
 can_sleep = false
 linear_damp = 0.1
 script = ExtResource( 2 )
+explosion_threshold = 450.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -83,3 +124,20 @@ region_rect = Rect2( 32, 0, 16, 16 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/Bobbling = SubResource( 2 )
 anims/Idle = SubResource( 3 )
+
+[node name="ShotParticles" type="Particles2D" parent="."]
+emitting = false
+amount = 16
+explosiveness = 0.01
+local_coords = false
+process_material = SubResource( 37 )
+texture = ExtResource( 4 )
+
+[node name="BombParticles" type="Particles2D" parent="."]
+emitting = false
+amount = 16
+one_shot = true
+explosiveness = 1.0
+local_coords = false
+process_material = SubResource( 37 )
+texture = ExtResource( 4 )

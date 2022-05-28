@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Puck.tscn" type="PackedScene" id=2]
@@ -6,8 +6,11 @@
 [ext_resource path="res://Net.tscn" type="PackedScene" id=4]
 [ext_resource path="res://RightNet.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Goalie.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Camera2D.gd" type="Script" id=7]
+[ext_resource path="res://GameManager.gd" type="Script" id=8]
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource( 8 )
 
 [node name="Rink" parent="." instance=ExtResource( 3 )]
 
@@ -15,21 +18,36 @@
 
 [node name="Player2" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( 60, 31 )
-script = null
 
 [node name="Player3" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( -31, 9 )
-script = null
 
 [node name="Player" parent="YSort" instance=ExtResource( 1 )]
 position = Vector2( -96, -43 )
 lefty = false
+precision = 75
 shot_power = 50
 max_speed = 120.0
 accel = 2.5
 
 [node name="Puck" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 0, 0 )
+
+[node name="Camera2D" type="Camera2D" parent="YSort/Puck"]
+current = true
+limit_left = -240
+limit_top = -120
+limit_right = 240
+limit_bottom = 120
+drag_margin_h_enabled = true
+drag_margin_v_enabled = true
+smoothing_enabled = true
+smoothing_speed = 2.0
+drag_margin_top = 1.0
+drag_margin_bottom = 1.0
+editor_draw_limits = true
+editor_draw_drag_margin = true
+script = ExtResource( 7 )
 
 [node name="Net2" parent="YSort" instance=ExtResource( 5 )]
 position = Vector2( 187, 22 )
@@ -39,6 +57,3 @@ position = Vector2( -186, 22 )
 
 [node name="Goalie" parent="YSort" instance=ExtResource( 6 )]
 position = Vector2( -166, 5 )
-
-[node name="Camera2D" type="Camera2D" parent="."]
-current = true

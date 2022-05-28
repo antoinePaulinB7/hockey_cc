@@ -19,6 +19,10 @@ onready var line_down: Line2D = $LineDown
 onready var line_shot: Line2D = $LineShot
 onready var skating_particles: Particles2D = $SkatingParticles
 
+onready var circle_indicator: Sprite = $Circle
+onready var arrow_indicator: Sprite = $Arrow
+onready var indicator_animation_player: AnimationPlayer = $IndicatorAnimationPlayer
+
 enum PlayerState {
 	IDLE, SKATING, CHARGING, SHOOTING, FALLEN, KO
 }
@@ -46,6 +50,7 @@ func _ready():
 	if !lefty:
 		sprite.scale.x = -1
 	
+	reset_indicator()
 #	self.collision_layer = pow(2, Constants.COLLISION_LAYERS["Player"] - 1)
 #	self.collision_mask = pow(2, Constants.COLLISION_LAYERS["Player"] - 1)
 #
@@ -91,7 +96,7 @@ func _process(delta):
 		else:
 			skating_particles.emitting = false
 	
-	print(linear_velocity.length())
+#	print(linear_velocity.length())
 	
 	update_line()
 
@@ -174,10 +179,32 @@ func get_shot_direction():
 	
 	return curr_direction.rotated(deviation)
 
+func select(color: Color):
+	arrow_indicator.self_modulate = color
+	circle_indicator.self_modulate = color
+	indicator_animation_player.play("Active")
+	
+func deselect():
+	arrow_indicator.self_modulate = Color.whitesmoke
+	circle_indicator.self_modulate = Color.whitesmoke
+	indicator_animation_player.play("Inactive")
+
+func reset_indicator():
+	arrow_indicator.visible = (puck != null)
+	arrow_indicator.self_modulate = Color.whitesmoke
+	circle_indicator.self_modulate = Color.whitesmoke
+	indicator_animation_player.play("Inactive")
+
+func hold_puck(puck):
+	self.puck = puck
+	arrow_indicator.visible = true
+
 func release_puck():
 	if puck:
 		puck.release()
 		puck = null
+	
+	arrow_indicator.visible = false
 
 func _on_PuckArea_body_entered(body: RigidBody2D):
 	if body.is_in_group("puck"):

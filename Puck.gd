@@ -35,7 +35,7 @@ func _physics_process(delta):
 
 func hold(player: Player):
 	holder = player
-	player.puck = self
+	player.hold_puck(self)
 	
 #	set_sleeping(true)
 	

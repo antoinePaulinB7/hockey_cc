@@ -35,7 +35,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 0 ) ]
 }
 
-[node name="Goalie" type="RigidBody2D"]
+[node name="Goalie" type="RigidBody2D" groups=["goalie"]]
 collision_layer = 256
 collision_mask = 394
 mode = 2
